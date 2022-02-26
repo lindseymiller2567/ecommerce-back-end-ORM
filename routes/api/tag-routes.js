@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
         model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
         through: ProductTag,
-        as: 'product'
+        as: 'products'
       }
     ]
   })
@@ -66,7 +66,7 @@ router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(
     {
-      tag: req.body.category_name
+      tag_name: req.body.tag_name
     },
     {
       where: {
@@ -74,12 +74,12 @@ router.put('/:id', (req, res) => {
       }
     }
   )
-    .then(dbCategoryData => {
-      if (!dbCategoryData) {
+    .then(dbTagData => {
+      if (!dbTagData) {
         res.status(404).json({ message: 'No tag found with this id' });
         return;
       }
-      res.json(dbCategoryData)
+      res.json(dbTagData)
     })
     .catch(err => {
       console.log(err);
